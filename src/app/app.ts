@@ -4,7 +4,7 @@ import { ReleveListeComponent } from './features/releves/components/releve-liste
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ReleveListeComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
