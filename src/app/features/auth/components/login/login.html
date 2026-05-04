@@ -1,0 +1,51 @@
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+
+  <div>
+    <h2 class="text-3xl font-bold text-emerald-700 mb-6">
+      Vercorium Blyat
+    </h2>
+  </div>
+
+  <div class="w-full sm:max-w-md px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <div>
+        <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="block mt-1 w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm py-2 px-3 border"
+          required
+          autofocus>
+      </div>
+
+      <div class="mt-4">
+        <label for="password" class="block font-medium text-sm text-gray-700">Mot de passe</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="block mt-1 w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm py-2 px-3 border"
+          required>
+      </div>
+
+      @if (erreur) {
+        <div class="mt-4 text-red-600 text-sm font-medium">
+          {{ erreur }}
+        </div>
+      }
+
+      <div class="flex items-center justify-end mt-6">
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="inline-flex items-center px-4 py-2 bg-emerald-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-emerald-800 focus:bg-emerald-800 active:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150 disabled:opacity-50">
+          Se connecter
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
