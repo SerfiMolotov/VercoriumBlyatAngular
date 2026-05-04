@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, afterNextRender, ChangeDetectorRef } from '@angular/core'; // <-- 1. Import de ChangeDetectorRef
 import { CommonModule } from '@angular/common';
-
 import { ReleveService } from '../../services/releve';
-import { Releve } from '../../models/releve';
 
 @Component({
   selector: 'app-releve-liste',
@@ -11,32 +9,34 @@ import { Releve } from '../../models/releve';
   templateUrl: './releve-liste.html',
   styleUrl: './releve-liste.css'
 })
-export class ReleveListeComponent implements OnInit {
-  releves: Releve[] = [];
+export class ReleveListeComponent {
+  releves: any[] = [];
 
-  constructor(private releveService: ReleveService) {}
-
-  ngOnInit(): void {
-    this.chargerReleves();
+  constructor(
+    private releveService: ReleveService,
+    private cdr: ChangeDetectorRef
+  ) {
+    afterNextRender(() => {
+      this.chargerReleves();
+    });
   }
 
   chargerReleves(): void {
     this.releveService.getReleves().subscribe({
       next: (reponse: any) => {
-        console.log('Réponse brute reçue depuis Laravel :', reponse);
-
-        if (reponse.data) {
+        if (Array.isArray(reponse)) {
+          this.releves = reponse;
+        } else if (reponse && Array.isArray(reponse.data)) {
           this.releves = reponse.data;
-        }
-        else if (reponse.releves) {
+        } else if (reponse && Array.isArray(reponse.releves)) {
           this.releves = reponse.releves;
         }
-        else {
-          this.releves = reponse;
-        }
+        console.log('✅ Relevés chargés avec succès :', this.releves);
+
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Erreur API Laravel :', err);
+        console.error('❌ Erreur de chargement (Token absent ou expiré) :', err);
       }
     });
   }

@@ -1,0 +1,39 @@
+<div class="min-h-screen bg-gray-100 flex flex-col">
+  <nav class="bg-blue-800 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <div class="flex items-center">
+          <span class="font-bold text-xl tracking-wider">Vercorium Blyat</span>
+
+          <div class="hidden md:block ml-10">
+            <div class="flex items-baseline space-x-4">
+              <a routerLink="/dashboard" routerLinkActive="bg-blue-900" [routerLinkActiveOptions]="{exact: true}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Accueil</a>
+
+              <a routerLink="/releves" routerLinkActive="bg-blue-900" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">📝 Mes Relevés</a>
+
+              <a routerLink="/sites" routerLinkActive="bg-blue-900" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">🏭 Sites & Capteurs</a>
+
+              <a routerLink="/logistique" routerLinkActive="bg-blue-900" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">📦 Matériel</a>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button (click)="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-bold transition shadow-sm">
+            Déconnexion
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-1 w-full max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="bg-white border-t py-4 text-center text-sm text-gray-500">
+    Vercorium Blyat © 2026 - Outil de gestion interne
+  </footer>
+</div>
