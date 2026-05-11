@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
   selector: 'app-dashboard-layout',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './dashboard-layout.component.html',
+  templateUrl: './dashboard-layout.html',
 })
 export class DashboardLayoutComponent {
 

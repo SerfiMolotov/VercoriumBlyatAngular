@@ -1,0 +1,42 @@
+<div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Gestion des Sites</h2>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition">
+      + Ajouter un Site
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+      <thead>
+      <tr class="border-b border-gray-100 text-gray-400 text-sm uppercase">
+        <th class="py-3 px-4">Nom du Site</th>
+        <th class="py-3 px-4">Localisation</th>
+        <th class="py-3 px-4">Type</th>
+        <th class="py-3 px-4 text-right">Actions</th>
+      </tr>
+      </thead>
+      <tbody class="text-gray-600">
+        @for (site of sites; track site.id) {
+          <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+            <td class="py-4 px-4 font-bold text-gray-800">{{ site.nom }}</td>
+            <td class="py-4 px-4">{{ site.ville }} ({{ site.code_postal }})</td>
+            <td class="py-4 px-4">
+              <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded-md text-xs font-bold uppercase">
+                {{ site.type }}
+              </span>
+            </td>
+            <td class="py-4 px-4 text-right">
+              <button class="text-blue-600 hover:underline mr-3 text-sm font-medium">Modifier</button>
+              <button class="text-gray-400 hover:text-gray-600 text-sm font-medium">Capteurs</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="py-10 text-center text-gray-400 italic">Aucun site enregistré pour le moment.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

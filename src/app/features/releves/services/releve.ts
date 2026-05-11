@@ -14,4 +14,10 @@ export class ReleveService {
   getReleves(): Observable<Releve[]> {
     return this.http.get<Releve[]>(this.apiUrl);
   }
+  creerReleve(donnees: any): Observable<any> {
+    return this.http.post(`http://localhost:8000/api/addReleve`, donnees);
+  }
+  getSites(): Observable<any> {
+    return this.http.get('http://localhost:8000/api/sites');
+  }
 }
