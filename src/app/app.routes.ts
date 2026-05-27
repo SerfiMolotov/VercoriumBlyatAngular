@@ -7,6 +7,8 @@ import { HomeComponent } from './features/dashboard/home/home';
 import { ReleveCreateComponent } from './features/releves/components/releve-create/releve-create';
 import { authGuard } from './core/guards/auth-guard';
 import { SiteListeComponent } from './features/sites/components/site-liste/site-liste';
+import { SiteEditComponent } from './features/sites/components/site-edit/site-edit';
+import { SiteCapteursComponent } from './features/sites/components/site-capteurs/site-capteurs';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,7 +22,9 @@ export const routes: Routes = [
       { path: 'releves', component: ReleveListeComponent },
       { path: 'releves/nouveau', component: ReleveCreateComponent },
       { path: 'sites', component: SiteListeComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'sites/modifier/:id', component: SiteEditComponent },
+      { path: 'sites/:id/capteurs', component: SiteCapteursComponent }
     ]
   },
 

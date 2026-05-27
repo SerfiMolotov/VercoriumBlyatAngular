@@ -27,8 +27,8 @@
               </span>
             </td>
             <td class="py-4 px-4 text-right">
-              <button class="text-blue-600 hover:underline mr-3 text-sm font-medium">Modifier</button>
-              <button class="text-gray-400 hover:text-gray-600 text-sm font-medium">Capteurs</button>
+              <a [routerLink]="['/sites/modifier', site.id]" class="text-blue-600 hover:underline mr-3 text-sm font-medium cursor-pointer">Modifier</a>
+              <a [routerLink]="['/sites', site.id, 'capteurs']" class="text-green-600 hover:underline text-sm font-medium cursor-pointer">Capteurs</a>
             </td>
           </tr>
         } @empty {

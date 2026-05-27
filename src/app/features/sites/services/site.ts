@@ -11,4 +11,16 @@ export class SiteService {
   getSites(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  getSite(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  updateSite(id: number, donnees: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, donnees);
+  }
+
+  getCapteursParSite(siteId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${siteId}/capteurs`);
+  }
 }

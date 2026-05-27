@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -28,10 +30,10 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.http.post<any>('http://localhost:8000/api/login', this.loginForm.value).subscribe({
+      this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.access_token);
-          this.router.navigate(['/releves']);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.erreur = "Email ou mot de passe incorrect.";

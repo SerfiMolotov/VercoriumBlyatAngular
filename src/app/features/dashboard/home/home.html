@@ -1,4 +1,52 @@
-<div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-  <h1 class="text-3xl font-bold text-gray-800 mb-4">Bienvenue sur votre espace ! 👋</h1>
-  <p class="text-gray-600">Sélectionnez une rubrique dans le menu ci-dessus pour commencer.</p>
+<div class="bg-white p-8 rounded-xl shadow-sm border border-gray-200 mt-6">
+
+  @if (utilisateur) {
+    <div class="flex items-center gap-6 mb-8 pb-8 border-b border-gray-100">
+
+      <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-blue-800 text-2xl font-bold shadow-inner">
+        {{ utilisateur.name.charAt(0) | uppercase }}
+      </div>
+
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 mb-1">
+          Bienvenue, {{ utilisateur.name }}
+        </h1>
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-gray-500">✉️ {{ utilisateur.email }}</span>
+          <span class="text-gray-300">|</span>
+
+          <span class="px-2 py-1 bg-green-100 text-green-800 rounded font-bold uppercase text-xs">
+            Rôle : {{ utilisateur.role ?? 'Utilisateur' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="animate-pulse flex space-x-4 mb-8">
+      <div class="rounded-full bg-gray-200 h-16 w-16"></div>
+      <div class="flex-1 space-y-4 py-1">
+        <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+      </div>
+    </div>
+  }
+
+  <p class="text-gray-600 mb-6">Que souhaitez-vous faire aujourd'hui ?</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <a routerLink="/releves" class="block p-5 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition cursor-pointer">
+      <h3 class="text-blue-800 font-bold text-lg">📡 Mes Relevés</h3>
+      <p class="text-sm text-blue-600 mt-1">Consulter ou ajouter un relevé de terrain.</p>
+    </a>
+
+    <a routerLink="/sites" class="block p-5 bg-green-50 rounded-lg border border-green-100 hover:bg-green-100 transition cursor-pointer">
+      <h3 class="text-green-800 font-bold text-lg">🌍 Gestion des Sites</h3>
+      <p class="text-sm text-green-600 mt-1">Voir les infrastructures et capteurs.</p>
+    </a>
+
+    <div class="p-5 bg-orange-50 rounded-lg border border-orange-100 opacity-75">
+      <h3 class="text-orange-800 font-bold text-lg">🔧 Matériel</h3>
+      <p class="text-sm text-orange-600 mt-1">État des stocks (Bientôt disponible)</p>
+    </div>
+  </div>
 </div>
