@@ -23,4 +23,8 @@ export class SiteService {
   getCapteursParSite(siteId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${siteId}/capteurs`);
   }
+
+  creerSite(donnees: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, donnees);
+  }
 }

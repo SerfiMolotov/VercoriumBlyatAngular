@@ -9,6 +9,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { SiteListeComponent } from './features/sites/components/site-liste/site-liste';
 import { SiteEditComponent } from './features/sites/components/site-edit/site-edit';
 import { SiteCapteursComponent } from './features/sites/components/site-capteurs/site-capteurs';
+import { SiteCreateComponent } from './features/sites/components/site-create/site-create';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,9 +25,10 @@ export const routes: Routes = [
       { path: 'sites', component: SiteListeComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'sites/modifier/:id', component: SiteEditComponent },
-      { path: 'sites/:id/capteurs', component: SiteCapteursComponent }
-    ]
+      { path: 'sites/:id/capteurs', component: SiteCapteursComponent },
+      { path: 'sites/nouveau', component: SiteCreateComponent }
+    ],
   },
 
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '**', redirectTo: 'dashboard' },
 ];
