@@ -1,26 +1,38 @@
-<div class="min-h-screen bg-gray-100 flex flex-col">
-  <nav class="bg-blue-800 text-white shadow-lg">
+<div class="min-h-screen bg-slate-50 flex flex-col font-sans">
+
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
 
-        <div class="flex items-center">
-          <span class="font-bold text-xl tracking-wider">Vercorium Blyat</span>
-
-          <div class="hidden md:block ml-10">
-            <div class="flex items-baseline space-x-4">
-              <a routerLink="/dashboard" routerLinkActive="bg-blue-900" [routerLinkActiveOptions]="{exact: true}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Accueil</a>
-
-              <a routerLink="/releves" routerLinkActive="bg-blue-900" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Mes Relevés</a>
-
-              <a routerLink="/sites" routerLinkActive="bg-blue-900" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Sites & Capteurs</a>
-
-              <a routerLink="/logistique" routerLinkActive="bg-blue-900" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition">Matériel</a>
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-inner">
+              <span class="text-white font-bold text-lg leading-none">V</span>
             </div>
+            <span class="font-extrabold text-xl tracking-tight text-slate-900">Vercor<span class="text-indigo-600 font-medium">Hub</span></span>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-2">
+
+            <a routerLink="/dashboard" routerLinkActive="bg-indigo-50 text-indigo-700" [routerLinkActiveOptions]="{exact: true}"
+               class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200">
+              Accueil
+            </a>
+
+            <a routerLink="/releves" routerLinkActive="bg-indigo-50 text-indigo-700"
+               class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200">
+              Relevés
+            </a>
+
+            <a routerLink="/sites" routerLinkActive="bg-indigo-50 text-indigo-700"
+               class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-all duration-200">
+              Sites & Capteurs
+            </a>
           </div>
         </div>
 
-        <div>
-          <button (click)="logout()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-bold transition shadow-sm">
+        <div class="flex items-center">
+          <button (click)="seDeconnecter()" class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-red-600 hover:bg-red-50 transition-all duration-200">
             Déconnexion
           </button>
         </div>
@@ -29,11 +41,21 @@
     </div>
   </nav>
 
-  <main class="flex-1 w-full max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <main class="flex-1 w-full max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
     <router-outlet></router-outlet>
   </main>
 
-  <footer class="bg-white border-t py-4 text-center text-sm text-gray-500">
-    Vercorium Blyat © 2026 - Outil de gestion interne
+  <footer class="bg-slate-50 border-t border-slate-200 py-6 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-sm text-slate-400 font-medium">
+        VercorHub © 2026
+      </p>
+      <div class="flex items-center gap-4 text-sm text-slate-400">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Serveurs Opérationnels</span>
+        <span class="hidden sm:inline">|</span>
+        <span>Version 1.2.0</span>
+      </div>
+    </div>
   </footer>
+
 </div>

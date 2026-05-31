@@ -1,54 +1,130 @@
-<div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-200 mt-6">
-  <div class="flex justify-between items-center mb-6 border-b pb-4">
-    <h2 class="text-2xl font-bold text-gray-800">➕ Nouveau Relevé</h2>
-    <a routerLink="/releves" class="text-blue-600 hover:text-blue-800 underline text-sm">Retour à la liste</a>
+<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6">
+
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Rapport d'Intervention</h2>
+      <p class="text-sm text-slate-500 mt-1">Saisie détaillée des conditions opérationnelles du site.</p>
+    </div>
+    <a routerLink="/releves" class="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition">Retourner à l'historique</a>
   </div>
 
-  <form [formGroup]="releveForm" (ngSubmit)="soumettre()" class="space-y-5">
+  <form [formGroup]="releveForm" (ngSubmit)="soumettre()" class="space-y-8">
 
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Date du relevé *</label>
-        <input type="date" formControlName="date_releve" class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest">1. Contexte de l'intervention</h3>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Site *</label>
-
-        <select formControlName="site_id" class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
-
-          <option value="" disabled selected>Sélectionnez un site...</option>
-
-          @for (site of sites; track site.id) {
-            <option [value]="site.id">{{ site.nom }}</option>
-          }
-
-        </select>
+      <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Date du relevé <span class="text-red-500">*</span></label>
+          <input type="date" formControlName="date_releve" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Site concerné <span class="text-red-500">*</span></label>
+          <select formControlName="site_id" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+            <option value="" disabled selected>Sélectionnez une infrastructure...</option>
+            @for (site of sites; track site.id) {
+              <option [value]="site.id">{{ site.nom }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Type de visite <span class="text-red-500">*</span></label>
+          <select formControlName="type_intervention" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+            <option value="routine">Contrôle de routine</option>
+            <option value="depannage">Dépannage technique</option>
+            <option value="installation">Nouvelle installation</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Conditions météorologiques</label>
+          <select formControlName="meteo" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+            <option value="">Non spécifié</option>
+            <option value="ensoleille">Ensoleillé</option>
+            <option value="pluie">Pluie</option>
+            <option value="neige">Neige / Gel</option>
+            <option value="vent_fort">Vent fort</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Profondeur mesurée (en mètres) <span class="text-red-500">*</span></label>
+          <input type="number" step="0.01" formControlName="profondeur" placeholder="Ex: 145.50" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1">Temps passé sur place (minutes)</label>
+          <input type="number" formControlName="duree_intervention" placeholder="Ex: 45" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+        </div>
       </div>
     </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Profondeur (mètres) *</label>
-      <input type="number" step="0.01" formControlName="profondeur" placeholder="Ex: 12.5" class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest">2. Bilan technique et Sécurité</h3>
+      </div>
+
+      <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Statut de la production <span class="text-red-500">*</span></label>
+            <select formControlName="statut_production" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+              <option value="normale">Production normale</option>
+              <option value="degrade">Fonctionnement dégradé</option>
+              <option value="arret">Arrêt total</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Intégrité de la structure <span class="text-red-500">*</span></label>
+            <select formControlName="etat_structure" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+              <option value="bon">Bon état (Conforme)</option>
+              <option value="degrade">Dégradé (À surveiller)</option>
+              <option value="critique">Critique (Danger)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Niveau des stocks d'appoint (%)</label>
+            <input type="number" formControlName="niveau_stockage_general" placeholder="Ex: 85" class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
+          <label class="flex items-center gap-3 p-2 hover:bg-white rounded transition cursor-pointer">
+            <input type="checkbox" formControlName="perimetre_securise" class="w-5 h-5 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
+            <span class="text-sm font-medium text-slate-700">Le périmètre du site est parfaitement sécurisé</span>
+          </label>
+          <label class="flex items-center gap-3 p-2 hover:bg-white rounded transition cursor-pointer">
+            <input type="checkbox" formControlName="fuites_visibles" class="w-5 h-5 text-red-600 rounded border-slate-300 focus:ring-red-500">
+            <span class="text-sm font-bold text-red-600">Présence de fuites (Eau / Hydrocarbures)</span>
+          </label>
+          <label class="flex items-center gap-3 p-2 bg-red-100/50 border border-red-200 rounded transition cursor-pointer mt-4">
+            <input type="checkbox" formControlName="anomalies" class="w-5 h-5 text-red-600 rounded border-red-300 focus:ring-red-500">
+            <span class="text-sm font-bold text-red-800">Déclencher une alerte d'anomalie globale sur ce site</span>
+          </label>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-1">Observations</label>
-      <textarea formControlName="observations" rows="3" placeholder="Tout est normal..." class="w-full border border-gray-300 rounded-md p-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-    </div>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="p-6">
+        <label class="block text-sm font-medium text-slate-700 mb-2">Observations complémentaires et recommandations</label>
+        <textarea formControlName="observations" rows="4" placeholder="Détaillez ici toute information utile pour l'équipe..." class="w-full border-slate-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm resize-none"></textarea>
+      </div>
 
-    <div class="flex items-center mt-2 p-3 bg-red-50 border border-red-100 rounded-md">
-      <input type="checkbox" id="anomalies" formControlName="anomalies" class="w-5 h-5 text-red-600 rounded focus:ring-red-500">
-      <label for="anomalies" class="ml-2 block text-sm text-red-800 font-bold">Signaler une anomalie critique sur ce relevé</label>
-    </div>
+      <div class="px-6 py-5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-6">
 
-    <div class="pt-4 flex justify-end gap-3">
-      <a routerLink="/releves" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition">Annuler</a>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" formControlName="signature_technicien" class="w-6 h-6 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
+          <span class="text-sm font-bold text-slate-800">Je certifie l'exactitude de ces informations. <span class="text-red-500">*</span></span>
+        </label>
 
-      <button type="submit" [disabled]="releveForm.invalid || enCoursDeSoumission"
-              class="bg-blue-600 text-white px-6 py-2 rounded-md font-bold hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed transition shadow-sm">
-        {{ enCoursDeSoumission ? 'Enregistrement...' : 'Enregistrer le relevé' }}
-      </button>
+        <div class="flex gap-3 w-full sm:w-auto">
+          <button type="submit" [disabled]="releveForm.invalid || enCoursDeSoumission"
+                  class="w-full sm:w-auto bg-indigo-600 text-white px-8 py-2.5 rounded-lg font-semibold hover:bg-indigo-700 disabled:bg-indigo-300 disabled:cursor-not-allowed transition-colors shadow-sm">
+            {{ enCoursDeSoumission ? 'Transmission...' : 'Soumettre le rapport' }}
+          </button>
+        </div>
+
+      </div>
     </div>
 
   </form>

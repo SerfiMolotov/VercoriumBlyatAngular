@@ -18,4 +18,6 @@ export interface Releve {
   observations?: string | null;
   created_at?: string;
   updated_at?: string;
+  site?: { id: number; nom: string };
+  user?: { id: number; name: string };
 }

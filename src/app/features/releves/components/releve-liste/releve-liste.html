@@ -1,46 +1,142 @@
-<div class="min-h-screen bg-gray-50 py-8 px-4">
-  <div class="max-w-4xl mx-auto">
+<div class="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
 
-    <div class="flex justify-between items-center mb-8 border-b-2 border-blue-700 pb-4">
-      <h2 class="text-3xl font-bold text-blue-800">
-         Liste des Relevés
-      </h2>
-      <a routerLink="/releves/nouveau" class="bg-green-600 text-white px-4 py-2 rounded shadow font-bold hover:bg-green-700">
-        + Créer un relevé
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+      <div>
+        <h2 class="text-3xl font-bold text-slate-900 tracking-tight">Historique des Interventions</h2>
+        <p class="text-sm text-slate-500 mt-1">Consultez l'ensemble des rapports techniques saisis sur les infrastructures.</p>
+      </div>
+      <a routerLink="/releves/nouveau" class="inline-flex items-center justify-center bg-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-indigo-700 transition shadow-sm whitespace-nowrap">
+        Nouveau Rapport
       </a>
     </div>
 
-    <div class="flex flex-col gap-4">
+    <div class="grid grid-cols-1 gap-6">
 
-      @for (releve of releves; track $index) {
-        <div class="bg-white border border-gray-200 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-          <div class="flex justify-between items-start mb-4">
+      @for (releve of releves; track releve.id) {
+        <div class="bg-white border transition-shadow duration-200 rounded-xl overflow-hidden shadow-sm"
+             [ngClass]="releve.anomalies ? 'border-red-300' : 'border-slate-200 hover:shadow-md'">
 
-            <h3 class="text-xl font-bold text-gray-900">
-              Relevé #{{ releve.id }} - Site ID: {{ releve.site_id }}
-            </h3>
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center px-6 py-4 bg-slate-50/50 border-b border-slate-100">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">{{ releve.site?.nom || 'Site non spécifié' }}</h3>
+              <p class="text-sm font-medium text-slate-500 mt-0.5">Date du relevé : {{ releve.date_releve }}</p>
+            </div>
 
-            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
-              {{ releve.date_releve }}
-            </span>
-          </div>
-
-          <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
-            <p><strong>Profondeur :</strong> {{ releve.profondeur }} m</p>
-            <p><strong>Anomalie :</strong>
-              <span [class.text-red-600]="releve.anomalies" [class.font-bold]="releve.anomalies">
-                {{ releve.anomalies ? 'Oui (Alerte)' : 'Non' }}
+            <div class="mt-3 sm:mt-0 flex gap-2">
+              <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold uppercase tracking-wide rounded-full">
+                {{ releve.type_intervention || 'Routine' }}
               </span>
-            </p>
+
+              @if(releve.anomalies) {
+                <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold uppercase tracking-wide rounded-full flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                  Anomalie Déclarée
+                </span>
+              }
+            </div>
           </div>
 
-          <div class="bg-gray-50 p-3 rounded text-sm text-gray-700 border border-gray-100">
-            <strong>Observations :</strong> {{ releve.observations || 'Aucune observation' }}
+          <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <div>
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Mesures & Production</h4>
+              <ul class="space-y-3 text-sm">
+                <li class="flex justify-between border-b border-slate-50 pb-1">
+                  <span class="text-slate-500">Profondeur</span>
+                  <span class="font-semibold text-slate-900">{{ releve.profondeur }} m</span>
+                </li>
+                <li class="flex justify-between border-b border-slate-50 pb-1">
+                  <span class="text-slate-500">Stockage</span>
+                  <span class="font-semibold text-slate-900">{{ releve.niveau_stockage_general || '--' }} %</span>
+                </li>
+                <li class="flex justify-between">
+                  <span class="text-slate-500">Production</span>
+                  <span class="font-semibold capitalize" [ngClass]="releve.statut_production === 'arret' ? 'text-red-600' : 'text-slate-900'">
+                    {{ releve.statut_production || 'Inconnu' }}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Environnement</h4>
+              <ul class="space-y-3 text-sm">
+                <li class="flex justify-between border-b border-slate-50 pb-1">
+                  <span class="text-slate-500">Météo</span>
+                  <span class="font-semibold capitalize text-slate-900">{{ releve.meteo || 'Non renseigné' }}</span>
+                </li>
+                <li class="flex justify-between border-b border-slate-50 pb-1">
+                  <span class="text-slate-500">Structure</span>
+                  <span class="font-semibold capitalize" [ngClass]="releve.etat_structure === 'critique' ? 'text-red-600' : 'text-slate-900'">
+                    {{ releve.etat_structure || 'Bon' }}
+                  </span>
+                </li>
+                <li class="flex justify-between">
+                  <span class="text-slate-500">Durée sur site</span>
+                  <span class="font-semibold text-slate-900">{{ releve.duree_intervention ? releve.duree_intervention + ' min' : '--' }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Contrôles Sécurité</h4>
+              <ul class="space-y-3 text-sm">
+                <li class="flex justify-between items-center border-b border-slate-50 pb-1">
+                  <span class="text-slate-500">Périmètre</span>
+                  @if(releve.perimetre_securise) {
+                    <span class="text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded text-xs">Sécurisé</span>
+                  } @else {
+                    <span class="text-red-700 font-medium bg-red-50 px-2 py-0.5 rounded text-xs">Compromis</span>
+                  }
+                </li>
+                <li class="flex justify-between items-center border-b border-slate-50 pb-1">
+                  <span class="text-slate-500">Fuites</span>
+                  @if(releve.fuites_visibles) {
+                    <span class="text-red-700 font-medium bg-red-50 px-2 py-0.5 rounded text-xs">Détectées</span>
+                  } @else {
+                    <span class="text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded text-xs">Aucune</span>
+                  }
+                </li>
+                <li class="flex justify-between items-center">
+                  <span class="text-slate-500">Photo jointe</span>
+                  <span class="font-medium text-slate-900">{{ releve.photo_url ? 'Oui' : 'Non' }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="lg:col-span-1">
+              <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Observations</h4>
+              <div class="bg-slate-50 rounded-md p-3 h-full min-h-[80px]">
+                @if(releve.observations) {
+                  <p class="text-sm text-slate-700 whitespace-pre-line">{{ releve.observations }}</p>
+                } @else {
+                  <p class="text-sm text-slate-400 italic">Aucune observation supplémentaire n'a été saisie pour cette intervention.</p>
+                }
+              </div>
+            </div>
+
           </div>
+
+          <div class="bg-slate-50 border-t border-slate-100 px-6 py-3 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+            <div>
+              Saisi par <span class="font-semibold text-slate-700">{{ releve.user?.name || 'Technicien inconnu' }}</span>
+            </div>
+            <div class="mt-2 sm:mt-0 flex items-center gap-1">
+              @if(releve.signature_technicien) {
+                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span class="text-emerald-700 font-medium">Rapport signé et certifié</span>
+              } @else {
+                <span class="text-slate-400">Rapport non signé</span>
+              }
+            </div>
+          </div>
+
         </div>
       } @empty {
-        <div class="bg-white p-8 text-center rounded-xl border border-gray-200 text-gray-500 italic shadow-sm">
-          Aucun relevé disponible ou chargement en cours...
+        <div class="bg-white border border-slate-200 rounded-xl p-12 text-center shadow-sm">
+          <h3 class="mt-2 text-sm font-medium text-slate-900">Aucun rapport</h3>
+          <p class="mt-1 text-sm text-slate-500">Il n'y a actuellement aucun rapport d'intervention dans la base de données.</p>
         </div>
       }
 

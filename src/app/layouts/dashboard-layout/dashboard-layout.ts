@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../core/services/auth';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -9,13 +10,13 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './dashboard-layout.html',
 })
 export class DashboardLayoutComponent {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
-  constructor(private router: Router) {}
-
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user_role');
-
+  seDeconnecter() {
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

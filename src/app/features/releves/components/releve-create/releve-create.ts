@@ -8,7 +8,7 @@ import { ReleveService } from '../../services/releve';
   selector: 'app-releve-create',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './releve-create.html'
+  templateUrl: './releve-create.html',
 })
 export class ReleveCreateComponent implements OnInit {
   releveForm: FormGroup;
@@ -20,14 +20,27 @@ export class ReleveCreateComponent implements OnInit {
     private fb: FormBuilder,
     private releveService: ReleveService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {
     this.releveForm = this.fb.group({
       date_releve: ['', Validators.required],
       site_id: ['', Validators.required],
       profondeur: ['', [Validators.required, Validators.min(0)]],
+
+      meteo: [''],
+      type_intervention: ['routine', Validators.required],
+      duree_intervention: [null, Validators.min(0)],
+
+      statut_production: ['normale', Validators.required],
+      etat_structure: ['bon', Validators.required],
+      niveau_stockage_general: [null, [Validators.min(0), Validators.max(100)]],
+
+      perimetre_securise: [true],
+      fuites_visibles: [false],
+      anomalies: [false],
+
       observations: [''],
-      anomalies: [false]
+      signature_technicien: [false, Validators.requiredTrue],
     });
   }
 
@@ -39,13 +52,15 @@ export class ReleveCreateComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur lors du chargement des sites', err);
-      }
+      },
     });
   }
 
   soumettre() {
-    if (this.releveForm.invalid) {
-      alert("Veuillez remplir correctement les champs obligatoires.");
+    if (this.releveForm.invalid)
+    {
+      this.releveForm.markAllAsTouched();
+      alert('Veuillez remplir correctement les champs obligatoires.');
       return;
     }
 
@@ -58,9 +73,9 @@ export class ReleveCreateComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur lors de la création', err);
-        alert("Erreur lors de la sauvegarde.");
+        alert('Erreur lors de la sauvegarde.');
         this.enCoursDeSoumission = false;
-      }
+      },
     });
   }
 }

@@ -10,6 +10,7 @@ import { SiteListeComponent } from './features/sites/components/site-liste/site-
 import { SiteEditComponent } from './features/sites/components/site-edit/site-edit';
 import { SiteCapteursComponent } from './features/sites/components/site-capteurs/site-capteurs';
 import { SiteCreateComponent } from './features/sites/components/site-create/site-create';
+import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,12 +22,37 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: HomeComponent },
       { path: 'releves', component: ReleveListeComponent },
-      { path: 'releves/nouveau', component: ReleveCreateComponent },
+
+      {
+        path: 'releves/nouveau',
+        component: ReleveCreateComponent,
+        canActivate: [roleGuard],
+        data: { requiredRoles: ['is_technicien', 'is_admin'] },
+      },
+
       { path: 'sites', component: SiteListeComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'sites/modifier/:id', component: SiteEditComponent },
-      { path: 'sites/:id/capteurs', component: SiteCapteursComponent },
-      { path: 'sites/nouveau', component: SiteCreateComponent }
+
+      {
+        path: 'sites/modifier/:id',
+        component: SiteEditComponent,
+        canActivate: [roleGuard],
+        data: { requiredRoles: ['is_technicien', 'is_chef_site', 'is_admin'] },
+      },
+
+      {
+        path: 'sites/:id/capteurs',
+        component: SiteCapteursComponent,
+        canActivate: [roleGuard],
+        data: { requiredRoles: ['is_technicien', 'is_chef_site', 'is_admin'] },
+      },
+
+      {
+        path: 'sites/nouveau',
+        component: SiteCreateComponent,
+        canActivate: [roleGuard],
+        data: { requiredRoles: ['is_admin'] },
+      },
     ],
   },
 
