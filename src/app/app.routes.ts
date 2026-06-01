@@ -38,7 +38,7 @@ export const routes: Routes = [
         path: 'sites/modifier/:id',
         component: SiteEditComponent,
         canActivate: [roleGuard],
-        data: { requiredRoles: ['is_technicien', 'is_chef_site', 'is_admin'] },
+        data: { requiredRoles: ['is_chef_site', 'is_admin'] },
       },
 
       {
@@ -58,7 +58,7 @@ export const routes: Routes = [
         path: 'capteurs/:id/releves',
         component: CapteurRelevesComponent,
         canActivate: [roleGuard],
-        data: { requiredRoles: ['is_admin', 'is_chef_site'] },
+        data: { requiredRoles: ['is_admin', 'is_chef_site','is_technicien'] },
       },
     ],
   },
