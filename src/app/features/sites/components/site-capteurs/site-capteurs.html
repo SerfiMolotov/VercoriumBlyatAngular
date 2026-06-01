@@ -43,7 +43,10 @@
                 </span>
               </td>
               <td class="py-4 px-4 text-right">
-                <button class="text-blue-600 hover:underline text-sm font-medium">Relevés</button>
+                <a routerLink="/capteurs/{{ capteur.id }}/releves"
+                   class="text-blue-600 hover:text-blue-800 hover:underline text-sm font-bold cursor-pointer transition-colors">
+                  Relevés
+                </a>
               </td>
             </tr>
           } @empty {

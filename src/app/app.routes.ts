@@ -11,6 +11,7 @@ import { SiteEditComponent } from './features/sites/components/site-edit/site-ed
 import { SiteCapteursComponent } from './features/sites/components/site-capteurs/site-capteurs';
 import { SiteCreateComponent } from './features/sites/components/site-create/site-create';
 import { roleGuard } from './core/guards/role.guard';
+import { CapteurRelevesComponent } from './features/capteurs/capteur-releves/capteur-releves';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -52,6 +53,12 @@ export const routes: Routes = [
         component: SiteCreateComponent,
         canActivate: [roleGuard],
         data: { requiredRoles: ['is_admin'] },
+      },
+      {
+        path: 'capteurs/:id/releves',
+        component: CapteurRelevesComponent,
+        canActivate: [roleGuard],
+        data: { requiredRoles: ['is_admin', 'is_chef_site'] },
       },
     ],
   },
